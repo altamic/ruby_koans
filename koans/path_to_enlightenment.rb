@@ -1,27 +1,55 @@
+# ruby_koans by EdgeCase for http://rubynetto.cataniarb.org 
 # The path to Ruby Enlightenment starts with the following:
 
-require 'about_asserts'
-require 'about_nil'
-require 'about_arrays'
-require 'about_array_assignment'
-require 'about_hashes'
-require 'about_strings'
-require 'about_methods'
-require 'about_control_statements'
-require 'about_true_and_false'
-require 'about_triangle_project'
-require 'about_exceptions'
-require 'about_triangle_project_2'
-require 'about_iteration'
-require 'about_blocks'
-require 'about_sandwich_code'
-require 'about_scoring_project'
-require 'about_classes'
-require 'about_dice_project'
-require 'about_inheritance'
-require 'about_modules'
-require 'about_scope'
-require 'about_class_methods'
-require 'about_message_passing'
-require 'about_proxy_object_project'
-require 'about_extra_credit'
+begin
+  require 'highline/import'
+rescue LoadError
+  require 'rubygems'
+  require 'highline/import'
+end
+
+LESSON_1 = %w(
+about_asserts 
+about_control_statements 
+about_true_and_false
+about_nil
+about_iteration
+about_strings
+)
+
+LESSON_2 = %w(
+about_arrays
+about_array_assignment
+about_hashes
+about_classes
+about_methods
+about_class_methods
+about_exceptions
+)
+
+LESSON_3 = %w(
+about_scope
+about_blocks
+about_sandwich_code
+about_inheritance
+about_modules
+about_message_passing
+about_proxy_object_project
+)
+
+LESSON_4 = %w(
+about_triangle_project
+about_triangle_project_2
+about_scoring_project
+about_dice_project
+about_extra_credit
+)
+
+lesson_number = ask("Which Lesson?  ", Integer) { |q| q.in = 1..4 }.to_s
+
+def lesson_number.constantize
+  name = "LESSON_#{self}"
+  Object.const_get(name) || Object.const_missing(name)
+end
+
+lesson_number.constantize.each { |koan| require koan}
